@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="GTNButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">10dp</item>
+        <item name="textAllCaps">false</item>
+        <item name="backgroundTint">@android:color/black</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/catamaran_medium</item>
+    </style>
+
+    <style name="GTNHomeCard" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">140dp</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:layout_marginTop">200dp</item>
+        <item name="cardCornerRadius">45dp</item>
+        <item name="android:fontFamily">@font/catamaran_medium</item>
+    </style>
+
+</resources>

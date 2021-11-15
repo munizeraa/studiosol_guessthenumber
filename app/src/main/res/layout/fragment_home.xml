@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tech_background">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/home_card"
+            android:layout_centerHorizontal="true"
+            style="@style/GTNHomeCard">
+
+            <ImageView
+                android:id="@+id/home_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher_foreground"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_start"
+            style="@style/GTNButton"
+            android:layout_below="@id/home_card"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/catamaran"
+            android:text="@string/home_start" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_settings"
+            android:text="@string/home_options"
+            android:layout_below="@id/button_start"
+            android:layout_centerHorizontal="true"
+            style="@style/GTNButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_about"
+            android:text="@string/home_about"
+            android:layout_below="@id/button_settings"
+            android:layout_centerHorizontal="true"
+            style="@style/GTNButton" />
+
+    </RelativeLayout>
+
+</FrameLayout>

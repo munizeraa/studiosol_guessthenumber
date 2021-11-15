@@ -1,0 +1,23 @@
+buildscript {
+    ext.kotlin_version = '1.5.31'
+    ext.hilt_version = '2.40'
+    ext.nav_version = "2.3.5"
+    ext.lifecycle_version = "2.3.1"
+    ext.coroutines_version = "1.3.9"
+    ext.retrofit_version = "2.9.0"
+    ext.glide_version = "4.12.0"
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

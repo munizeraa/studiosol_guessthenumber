@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GuessTheNumber</string>
+    <string name="ok">Ok</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_start">Iniciar Teste</string>
+    <string name="home_options">Opções</string>
+    <string name="home_about">Sobre</string>
+    <string name="guessing_send_number">Enviar</string>
+    <string name="guessing_input_hint">Digite o Palpite</string>
+    <string name="menu_change_font_size">Alterar Tamanho da Fonte</string>
+    <string name="menu_change_display_color">Alterar Cor de Exibição</string>
+</resources>
