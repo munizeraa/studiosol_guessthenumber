@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/tech_background"
     tools:context=".ui.fragments.GuessingFragment">
 
     <Toolbar
@@ -20,7 +21,10 @@
         android:id="@+id/display"
         android:layout_width="match_parent"
         android:layout_height="260dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@id/guess_input">
 
         <ProgressBar
@@ -42,6 +46,7 @@
                 android:id="@+id/display_guess_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/catamaran_medium"
                 android:textSize="16sp"
                 android:gravity="center"/>
@@ -80,7 +85,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Tentar Novamente"
+                android:fontFamily="@font/catamaran_medium"
+                android:text="@string/try_again"
+                android:textAllCaps="false"
                 android:gravity="end|center"/>
 
         </LinearLayout>

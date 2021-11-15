@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GuessTheNumber</string>
+    <string name="app_name">Qual é o Número?</string>
     <string name="ok">Ok</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -10,4 +10,5 @@
     <string name="guessing_input_hint">Digite o Palpite</string>
     <string name="menu_change_font_size">Alterar Tamanho da Fonte</string>
     <string name="menu_change_display_color">Alterar Cor de Exibição</string>
+    <string name="try_again">Nova Partida</string>
 </resources>
