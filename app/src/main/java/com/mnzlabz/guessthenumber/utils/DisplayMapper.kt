@@ -3,7 +3,7 @@ package com.mnzlabz.guessthenumber.utils
 class DisplayMapper {
 
     companion object {
-        val mappings = mapOf(
+        private val mappings = mapOf(
             "0" to "a@b@c@d@e@f",
             "1" to "b@c",
             "2" to "a@b@g@e@d",
@@ -15,8 +15,8 @@ class DisplayMapper {
             "8" to "a@b@c@d@e@f@g",
             "9" to "a@b@c@d@f@g"
         )
-    }
 
-    fun MapDigitToSegment(digit : String): List<String> = mappings[digit].toString().split("@")
+        fun getSegmentsFromDigit(digit : String): List<String> = mappings[digit].toString().split("@")
+    }
 
 }

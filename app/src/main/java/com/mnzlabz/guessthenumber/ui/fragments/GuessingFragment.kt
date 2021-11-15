@@ -1,6 +1,7 @@
 package com.mnzlabz.guessthenumber.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -10,6 +11,7 @@ import com.mnzlabz.guessthenumber.R
 import com.mnzlabz.guessthenumber.data.model.GTNModel
 import com.mnzlabz.guessthenumber.databinding.FragmentGuessingBinding
 import com.mnzlabz.guessthenumber.ui.viewmodels.GTNViewModel
+import com.mnzlabz.guessthenumber.utils.DisplayMapper
 import com.mnzlabz.guessthenumber.utils.Notifier
 
 class GuessingFragment : Fragment() {
@@ -30,6 +32,7 @@ class GuessingFragment : Fragment() {
         initializeListeners()
         initializeObservers()
 
+        buildDisplaySegments(507890002)
         binding.btnRetry.visibility = View.GONE
         return binding.root
     }
@@ -84,7 +87,7 @@ class GuessingFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.gtnModel.observe(viewLifecycleOwner, Observer {
-            buildSegmentDisplay(it)
+            //buildSegmentDisplay(it)
             displayResult(it)
 
             binding.progress.visibility = View.GONE
@@ -92,9 +95,17 @@ class GuessingFragment : Fragment() {
         })
     }
 
-    private fun buildSegmentDisplay(gtnModel: GTNModel) {
+    private fun buildDisplaySegments(number: Int) {
+        val digits = number.toString().map { it.toString() }
+        var segmentDisplay = mutableListOf<List<String>>()
 
+        digits.forEach { digit ->
+            segmentDisplay.add(DisplayMapper.getSegmentsFromDigit(digit))
+        }
 
+        segmentDisplay.forEach { digit ->
+            Log.i("SEGMENTS", digit.joinToString { it })
+        }
         //binding.displayGuessNumber.text = it.value?.toString() ?: it.statusCode.toString()
     }
 
