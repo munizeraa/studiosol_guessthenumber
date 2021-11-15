@@ -38,6 +38,7 @@ class GuessingFragment : Fragment() {
         inflater.inflate(R.menu.menu, menu)
     }
 
+    //TODO
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_change_font_size -> {
@@ -55,6 +56,7 @@ class GuessingFragment : Fragment() {
     private fun initializeListeners() {
         with(binding) {
             btnConfirm.setOnClickListener {
+                // UNCOMMENT THIS AFTER ALL DONE
 //                binding.btnConfirm.isClickable = false
                 binding.progress.visibility = View.VISIBLE
 
@@ -82,12 +84,18 @@ class GuessingFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.gtnModel.observe(viewLifecycleOwner, Observer {
-            binding.displayGuessNumber.text = it.value?.toString() ?: it.statusCode.toString()
+            buildSegmentDisplay(it)
             displayResult(it)
 
             binding.progress.visibility = View.GONE
             binding.btnRetry.visibility = View.VISIBLE
         })
+    }
+
+    private fun buildSegmentDisplay(gtnModel: GTNModel) {
+
+
+        //binding.displayGuessNumber.text = it.value?.toString() ?: it.statusCode.toString()
     }
 
     private fun displayResult(gtnModel: GTNModel) {
