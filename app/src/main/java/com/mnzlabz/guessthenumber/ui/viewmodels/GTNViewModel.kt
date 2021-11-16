@@ -24,7 +24,7 @@ class GTNViewModel @Inject constructor(private val repository: IGTNRepository): 
     fun getRandomNumber() {
         viewModelScope.launch(IO) {
             try {
-                repository.getRandomNumber(1, 10)?.let {
+                repository.getRandomNumber(111, 222)?.let {
                     _gtnModel.postValue(it)
                 }
             } catch (exception: Exception) {

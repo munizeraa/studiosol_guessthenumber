@@ -4,6 +4,7 @@ import android.util.Log
 import com.mnzlabz.guessthenumber.data.model.GTNModel
 import com.mnzlabz.guessthenumber.data.remote.IGTNService
 import com.mnzlabz.guessthenumber.data.repository.interfaces.IGTNRepository
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class GTNRepository @Inject constructor(private val service: IGTNService): IGTNRepository {
@@ -16,16 +17,29 @@ class GTNRepository @Inject constructor(private val service: IGTNService): IGTNR
 
         try {
             service.getRandomNumber(min, max).let { response ->
-                response.body()?.let {
-                    gtn = GTNModel(value = it.value,
-                        statusCode = response.code(),
-                        isSuccessful = response.isSuccessful,
-                        message = if(response.isSuccessful) response.message() else "Erro"
-                    )
+                if(response.isSuccessful) {
+                    response.body()?.let {
+                        gtn = it.value?.let { generatedValue ->
+                            GTNModel(value = generatedValue,
+                                statusCode = response.code(),
+                                isSuccessful = response.isSuccessful,
+                                message = "Success"
+                            )
+                        }
+                    }
+
+                } else {
+                    response.errorBody()?.let {
+                        gtn = GTNModel(value = response.raw().code,
+                            statusCode = response.raw().code,
+                            isSuccessful = response.isSuccessful,
+                            message = "Error"
+                        )
+                    }
                 }
             }
         } catch (exception: Exception) {
-            gtn = GTNModel(value = null,
+            gtn = GTNModel(value = -1,
                 statusCode = -1,
                 isSuccessful = false,
                 message = exception.message.toString()

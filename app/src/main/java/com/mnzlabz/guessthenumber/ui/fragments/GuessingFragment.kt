@@ -1,18 +1,17 @@
 package com.mnzlabz.guessthenumber.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
+import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.mnzlabz.guessthenumber.R
 import com.mnzlabz.guessthenumber.data.model.GTNModel
 import com.mnzlabz.guessthenumber.databinding.FragmentGuessingBinding
 import com.mnzlabz.guessthenumber.ui.viewmodels.GTNViewModel
-import com.mnzlabz.guessthenumber.utils.DisplayMapper
 import com.mnzlabz.guessthenumber.utils.Notifier
+import com.mnzlabz.guessthenumber.utils.printSegmentByDigit
 
 class GuessingFragment : Fragment() {
     private lateinit var binding: FragmentGuessingBinding
@@ -28,11 +27,11 @@ class GuessingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentGuessingBinding.inflate(inflater, container, false)
-//        binding.toolbarGuessing.inflateMenu(R.menu.menu)
         initializeListeners()
         initializeObservers()
 
-        buildDisplaySegments(507890002)
+        resetDisplay(true)
+        buildSegmentsStructure(0)
         binding.btnRetry.visibility = View.GONE
         return binding.root
     }
@@ -59,8 +58,7 @@ class GuessingFragment : Fragment() {
     private fun initializeListeners() {
         with(binding) {
             btnConfirm.setOnClickListener {
-                // UNCOMMENT THIS AFTER ALL DONE
-//                binding.btnConfirm.isClickable = false
+                binding.btnConfirm.isClickable = false
                 binding.progress.visibility = View.VISIBLE
 
                 if(validateGuessInput()) {
@@ -74,9 +72,9 @@ class GuessingFragment : Fragment() {
 
             btnRetry.setOnClickListener {
                 guessInput.text?.clear()
-                displayGuessNumber.text = ""
                 displayGuessResult.text = ""
                 binding.btnConfirm.isClickable = true
+                resetDisplay(true)
 
                 btnRetry.visibility = View.GONE
             }
@@ -87,26 +85,51 @@ class GuessingFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.gtnModel.observe(viewLifecycleOwner, Observer {
-            //buildSegmentDisplay(it)
             displayResult(it)
+            resetDisplay()
+            buildSegmentsStructure(it.value)
 
             binding.progress.visibility = View.GONE
             binding.btnRetry.visibility = View.VISIBLE
         })
     }
 
-    private fun buildDisplaySegments(number: Int) {
+    private fun resetDisplay(isStart: Boolean = false) {
+        with(binding) {
+//            firstDigit.root.allViews.forEach { it.alpha = 0.1F }
+//            secondDigit.root.allViews.forEach { it.alpha = 0.1F }
+//            thirdDigit.root.allViews.forEach { it.alpha = 0.1F }
+
+            if(isStart) {
+                secondDigit.root.visibility = View.GONE
+                thirdDigit.root.visibility = View.GONE
+                buildSegmentsStructure(0)
+            }
+        }
+    }
+
+    private fun buildSegmentsStructure(number: Int) {
         val digits = number.toString().map { it.toString() }
-        var segmentDisplay = mutableListOf<List<String>>()
 
-        digits.forEach { digit ->
-            segmentDisplay.add(DisplayMapper.getSegmentsFromDigit(digit))
+        digits.forEachIndexed {index, digit ->
+            print(digit, index)
         }
+    }
 
-        segmentDisplay.forEach { digit ->
-            Log.i("SEGMENTS", digit.joinToString { it })
+    private fun print(digit: String, displayIndex: Int) {
+        with(binding) {
+            when(displayIndex) {
+                0 -> { firstDigit.root.printSegmentByDigit(digit) }
+                1 -> {
+                    secondDigit.root.visibility = View.VISIBLE
+                    secondDigit.root.printSegmentByDigit(digit)
+                }
+                else -> {
+                    thirdDigit.root.visibility = View.VISIBLE
+                    thirdDigit.root.printSegmentByDigit(digit)
+                }
+            }
         }
-        //binding.displayGuessNumber.text = it.value?.toString() ?: it.statusCode.toString()
     }
 
     private fun displayResult(gtnModel: GTNModel) {
@@ -118,7 +141,7 @@ class GuessingFragment : Fragment() {
                     (!gtnModel.isSuccessful) -> { displayGuessResult.text = "Erro" }
                     (generatedNumber > userInput) -> { displayGuessResult.text = "O número gerado é maior que o palpite!" }
                     (generatedNumber < userInput) -> { displayGuessResult.text = "O número gerado é menor que o palpite!" }
-                    (generatedNumber == userInput) -> { displayGuessResult.text = "Acertou!" }
+                    else -> { displayGuessResult.text = "Acertou!" }
                 }
             }
         }

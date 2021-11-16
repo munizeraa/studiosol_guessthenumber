@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/catamaran_medium"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:gravity="center"/>
 
             <LinearLayout
@@ -85,9 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/catamaran_medium"
+                style="@style/GTNButton"
                 android:text="@string/try_again"
-                android:textAllCaps="false"
                 android:gravity="end|center"/>
 
         </LinearLayout>
