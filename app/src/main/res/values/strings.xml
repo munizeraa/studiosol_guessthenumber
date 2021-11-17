@@ -11,4 +11,12 @@
     <string name="menu_change_font_size">Alterar Tamanho da Fonte</string>
     <string name="menu_change_display_color">Alterar Cor de Exibição</string>
     <string name="try_again">Nova Partida</string>
+    <string name="btn_save_params">Salvar</string>
+    <string name="min_value">Valor Mínimo</string>
+    <string name="max_value">Valor Máximo</string>
+    <string name="settings_description">Defina aqui o range do gerador de números</string>
+    <string name="gtn_limit_min">gtn_limit_min</string>
+    <string name="gtn_limit_max">gtn_limit_max</string>
+    <string name="settings_saved">Configurações Salvas com sucesso!</string>
+    <string name="settings_validation_message">Os campos não podem estar vazios ou iguais!</string>
 </resources>

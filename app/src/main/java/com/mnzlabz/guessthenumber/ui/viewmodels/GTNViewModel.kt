@@ -11,25 +11,32 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 
 @HiltViewModel
 class GTNViewModel @Inject constructor(private val repository: IGTNRepository): ViewModel() {
-
-    private var _inputUser = MutableLiveData<Int>()
     private var _gtnModel = MutableLiveData<GTNModel>()
+    private var _minRange = MutableLiveData<Int>()
+    private var _maxRange = MutableLiveData<Int>()
 
-    val inputUser: LiveData<Int> = _inputUser
+    val minRange: LiveData<Int> = _minRange
+    val maxRange: LiveData<Int> = _maxRange
     val gtnModel: LiveData<GTNModel> = _gtnModel
 
     fun getRandomNumber() {
         viewModelScope.launch(IO) {
             try {
-                repository.getRandomNumber(111, 222)?.let {
+                repository.getRandomNumber(100, 222)?.let {
                     _gtnModel.postValue(it)
                 }
             } catch (exception: Exception) {
                 Log.e("GNTViewModel", exception.message.toString())
             }
         }
+    }
+
+    fun setRange(minRange: Int, maxRange: Int) {
+        _minRange.value = minRange
+        _maxRange.value = maxRange
     }
 }
