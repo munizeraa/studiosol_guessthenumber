@@ -1,12 +1,17 @@
 package com.mnzlabz.guessthenumber.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.view.allViews
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.mnzlabz.guessthenumber.R
+import com.mnzlabz.guessthenumber.data.local.GuessEntity
 import com.mnzlabz.guessthenumber.data.model.GTNModel
 import com.mnzlabz.guessthenumber.databinding.FragmentGuessingBinding
 import com.mnzlabz.guessthenumber.ui.viewmodels.GTNViewModel
@@ -16,6 +21,8 @@ import com.mnzlabz.guessthenumber.utils.printSegmentByDigit
 class GuessingFragment : Fragment() {
     private lateinit var binding: FragmentGuessingBinding
     private val viewModel: GTNViewModel by activityViewModels()
+    private lateinit var fade: Animation
+    private lateinit var _context: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,29 +33,32 @@ class GuessingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        container?.let { _context = it.context }
         binding = FragmentGuessingBinding.inflate(inflater, container, false)
+
         initializeListeners()
         initializeObservers()
-
+        initializeAnimations(inflater)
         resetDisplay(true)
         buildSegmentsStructure(0)
         binding.btnRetry.visibility = View.GONE
+
         return binding.root
+    }
+
+    private fun initializeAnimations(inflater: LayoutInflater) {
+        fade = AnimationUtils.loadAnimation(inflater.context, R.anim.fade_in)
+        binding.root.startAnimation(fade)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu, menu)
     }
 
-    //TODO
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_change_font_size -> {
-                // TODO: Implement this
-                true
-            }
-            R.id.action_change_palette -> {
-                // TODO: Implement this
+            R.id.action_show_history -> {
+                this.findNavController().navigate(R.id.action_guessingFragment_to_historyFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -66,7 +76,7 @@ class GuessingFragment : Fragment() {
                 } else {
                     binding.progress.visibility = View.GONE
                     binding.btnConfirm.isClickable = true
-                    Notifier.notify("O campo de palpite é obrigatório!", layoutInflater.context)
+                    Notifier.notify(getString(R.string.guess_mandatory_number), layoutInflater.context)
                 }
             }
 
@@ -85,21 +95,19 @@ class GuessingFragment : Fragment() {
 
     private fun initializeObservers() {
         viewModel.gtnModel.observe(viewLifecycleOwner, Observer {
-            displayResult(it)
-            resetDisplay()
-            buildSegmentsStructure(it.value)
+            it?.let{
+                displayResult(it)
+                resetDisplay()
+                buildSegmentsStructure(it.value)
 
-            binding.progress.visibility = View.GONE
-            binding.btnRetry.visibility = View.VISIBLE
+                binding.progress.visibility = View.GONE
+                binding.btnRetry.visibility = View.VISIBLE
+            }
         })
     }
 
     private fun resetDisplay(isStart: Boolean = false) {
         with(binding) {
-//            firstDigit.root.allViews.forEach { it.alpha = 0.1F }
-//            secondDigit.root.allViews.forEach { it.alpha = 0.1F }
-//            thirdDigit.root.allViews.forEach { it.alpha = 0.1F }
-
             if(isStart) {
                 secondDigit.root.visibility = View.GONE
                 thirdDigit.root.visibility = View.GONE
@@ -134,14 +142,19 @@ class GuessingFragment : Fragment() {
 
     private fun displayResult(gtnModel: GTNModel) {
         with(binding) {
-            val userInput = guessInput.text.toString().toInt()
+            if(validateGuessInput()) {
+                val userInput = guessInput.text.toString().toInt()
 
-            gtnModel.value?.let { generatedNumber ->
-                when {
-                    (!gtnModel.isSuccessful) -> { displayGuessResult.text = "Erro" }
-                    (generatedNumber > userInput) -> { displayGuessResult.text = "O número gerado é maior que o palpite!" }
-                    (generatedNumber < userInput) -> { displayGuessResult.text = "O número gerado é menor que o palpite!" }
-                    else -> { displayGuessResult.text = "Acertou!" }
+                gtnModel.value?.let { generatedNumber ->
+                    val guess = GuessEntity(0, userInput, gtnModel.value, generatedNumber == userInput)
+                    viewModel.insertGuess(guess)
+
+                    when {
+                        (!gtnModel.isSuccessful) -> { displayGuessResult.text = "Erro" }
+                        (generatedNumber > userInput) -> { displayGuessResult.text = "O número gerado é maior que o palpite!" }
+                        (generatedNumber < userInput) -> { displayGuessResult.text = "O número gerado é menor que o palpite!" }
+                        else -> { displayGuessResult.text = "Acertou!" }
+                    }
                 }
             }
         }

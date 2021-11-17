@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_home_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-        <action
-            android:id="@+id/action_home_to_historyFragment"
-            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/guessingFragment"
@@ -28,6 +25,9 @@
         <action
             android:id="@+id/action_guessingFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_guessingFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -35,8 +35,8 @@
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
-            android:id="@+id/action_historyFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_historyFragment_to_guessingFragment"
+            app:destination="@id/guessingFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

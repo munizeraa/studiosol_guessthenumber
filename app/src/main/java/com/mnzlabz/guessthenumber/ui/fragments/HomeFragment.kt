@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
 
         sharedPreferences = _context.getSharedPreferences("GTN_PREFERENCES", Context.MODE_PRIVATE)
 
+        viewModel.resetGTNModel()
         initializeAnimations(inflater)
         initializeListeners()
         initializeObservers()
@@ -85,7 +86,7 @@ class HomeFragment : Fragment() {
             }
 
             buttonAbout.setOnClickListener {
-                Notifier.notify("Desenvolvedor: Philippe Muniz Gomes \\nEmail: pmdm.sys@gmail.com", layoutInflater.context)
+                Notifier.notify(getString(R.string.home_about_developer), layoutInflater.context)
             }
         }
     }

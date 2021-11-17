@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Qual é o Número?</string>
     <string name="ok">Ok</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_start">Iniciar Teste</string>
     <string name="home_options">Opções</string>
@@ -19,4 +18,15 @@
     <string name="gtn_limit_max">gtn_limit_max</string>
     <string name="settings_saved">Configurações Salvas com sucesso!</string>
     <string name="settings_validation_message">Os campos não podem estar vazios ou iguais!</string>
+    <string name="guess_mandatory_number">O campo de palpite é obrigatório!</string>
+    <string name="show_history">Exibir Histórico de Jogadas</string>
+    <string name="home_about_developer">Dev: pmdm.sys@gmail.com</string>
+    <string name="history_label_guess">Palpite:</string>
+    <string name="history_label_generated_number">Número Gerado:</string>
+    <string name="history_label_result">Acertou?</string>
+    <string name="history_empty">Nenhum registro de palpites!</string>
+    <string name="delete_history">Apagar histórico</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="history_confirmation_delete">Deseja apagar todo o Histórico?</string>
 </resources>

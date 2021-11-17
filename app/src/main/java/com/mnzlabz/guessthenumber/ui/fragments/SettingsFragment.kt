@@ -28,11 +28,9 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        container?.let {
-            _context = it.context
-        }
-
+        container?.let { _context = it.context }
         binding = FragmentSettingsBinding.inflate(inflater, container,  false)
+
         sharedPreferences = _context.getSharedPreferences("GTN_PREFERENCES", Context.MODE_PRIVATE)
 
         initializeAnimations(inflater)

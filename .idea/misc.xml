@@ -9,9 +9,11 @@
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.36041666666666666" />
+        <entry key="app/src/main/res/layout/guess_item.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/segment.xml" value="0.34782608695652173" />
         <entry key="app/src/main/res/layout/segment_display.xml" value="0.2" />
         <entry key="app/src/main/res/layout/styles.xml" value="0.34782608695652173" />
+        <entry key="app/src/main/res/menu/history_menu.xml" value="0.16875" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.36041666666666666" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2625" />
       </map>

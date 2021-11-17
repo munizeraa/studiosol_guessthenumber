@@ -1,13 +1,15 @@
 package com.mnzlabz.guessthenumber.data.repository.implementations
 
 import android.util.Log
+import com.mnzlabz.guessthenumber.data.local.GuessEntity
+import com.mnzlabz.guessthenumber.data.local.GuessingDAO
 import com.mnzlabz.guessthenumber.data.model.GTNModel
 import com.mnzlabz.guessthenumber.data.remote.IGTNService
 import com.mnzlabz.guessthenumber.data.repository.interfaces.IGTNRepository
-import retrofit2.HttpException
 import javax.inject.Inject
 
-class GTNRepository @Inject constructor(private val service: IGTNService): IGTNRepository {
+class GTNRepository @Inject constructor(private val service: IGTNService,
+private val guessingDAO: GuessingDAO): IGTNRepository {
     companion object {
         const val TAG = "GTNRepository"
     }
@@ -47,5 +49,39 @@ class GTNRepository @Inject constructor(private val service: IGTNService): IGTNR
         }
 
         return gtn
+    }
+
+    override suspend fun insertGuess(guessingEntiy: GuessEntity): Long {
+        var id: Long = -1
+
+        try {
+            id = guessingDAO.insert(guessingEntiy)
+
+        } catch(exception: Exception) {
+            Log.e(TAG, exception.message.toString())
+        }
+
+        return id
+    }
+
+    override suspend fun getAllGuesses(): List<GuessEntity> {
+        var guesses: ArrayList<GuessEntity> = arrayListOf()
+
+        try {
+            guesses.addAll(guessingDAO.getAll())
+
+        } catch(exception: Exception) {
+            Log.e(TAG, exception.message.toString())
+        }
+
+        return guesses
+    }
+
+    override suspend fun deleteAllGuesses() {
+        try {
+            guessingDAO.deleteAll()
+        } catch(exception: Exception) {
+            Log.e(TAG, exception.message.toString())
+        }
     }
 }
