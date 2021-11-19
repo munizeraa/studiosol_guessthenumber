@@ -17,3 +17,7 @@ Simple App made for a test to Studio Sol Company.
 - Glide
 - Hilt
 - MVVM
+
+
+# Challenge Description Link:
+https://drive.google.com/file/d/17E0dTaIzBdiKNnWUOMk_AGXwWGlbpNsK/view
